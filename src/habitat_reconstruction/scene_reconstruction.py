@@ -7,7 +7,6 @@ import lib.utils.io as io_local
 import lib.utils.filetool as ft
 import lib.utils.transformation as tf
 
-
 import os
 import numpy as np
 import time
@@ -20,6 +19,7 @@ from pathlib import Path
 import json
 
 import copy
+
 
 # floor_color = np.asarray([243, 246, 208], dtype=np.uint8)
 # wall_color = np.asarray([148, 232, 164], dtype=np.uint8)
@@ -244,7 +244,9 @@ def extract_wall(pcd, name):
 ExtractFloor = True
 
 # data_path = os.path.join(proj_path, config["datapath"])
-data_path = Path("../images_correct_rotation_1m_79fov")
+import sys
+
+data_path = Path(sys.argv[0])
 
 all_room_names = ft.grab_directory(data_path)
 all_room_names.sort()
@@ -271,7 +273,6 @@ for name in selected_room_names:
     print("Current sequence is {}".format(name))
     pcd = reconstruct_once(name)
     wall_pcd = extract_wall(pcd, name)
-
 
 end_t = time.time()
 elapsed_t = (end_t - start_t) / float(3600)

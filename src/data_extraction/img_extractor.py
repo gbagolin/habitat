@@ -36,8 +36,8 @@ class Rot30(PoseExtractor):
 # test_sets = [x.strip("\n") for x in lines]
 import sys
 
-scene_filepath = (sys.argv[0])
-scene = sys.argv[1]
+scene_filepath = (sys.argv[1])
+scene = sys.argv[2]
 
 extractor = ImageExtractor(
     scene_filepath,

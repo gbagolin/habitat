@@ -19,7 +19,10 @@ from pathlib import Path
 import json
 
 import copy
+import gc
 
+
+gc.enable()
 
 # floor_color = np.asarray([243, 246, 208], dtype=np.uint8)
 # wall_color = np.asarray([148, 232, 164], dtype=np.uint8)
@@ -103,10 +106,12 @@ def reconstruct_once(scene_name):
             depth_data[indices_floor] = depth_raw[indices_floor] * 1000
             depth_data[indices_wall] = depth_raw[indices_wall] * 1000
             depth = o3d.geometry.Image(depth_data)
+
         else:
             depth_data = np.load(depth_path)
             print(type(depth_data[0, 0]))
             depth = o3d.geometry.Image((depth_data * 1000.0))
+
 
         rgb_path = os.path.join(rgb_folder, rgb_list[current_index])
         color = o3d.io.read_image(rgb_path)
@@ -118,6 +123,15 @@ def reconstruct_once(scene_name):
         current_cam_pose = cam_poses[current_index]
 
         volume.integrate(rgbd, intrinsic, np.linalg.inv(current_cam_pose))
+
+        del semantic_image
+        del depth_raw
+        del indices_floor
+        del indices_wall
+        del rgbd
+        del depth_data
+        del color
+        gc.collect()
 
         current_index = current_index + 1
 
@@ -246,14 +260,14 @@ ExtractFloor = True
 # data_path = os.path.join(proj_path, config["datapath"])
 import sys
 
-data_path = Path(sys.argv[0])
+data_path = Path(sys.argv[1])
 
 all_room_names = ft.grab_directory(data_path)
 all_room_names.sort()
 print(all_room_names)
 
 selected_room_names = all_room_names
-intrinsic_file = "camera_HABITAT.json"
+intrinsic_file = "/content/habitat/src/habitat_reconstruction/camera_HABITAT.json"
 
 intrinsic = o3d.io.read_pinhole_camera_intrinsic(intrinsic_file)
 print("The intrinsic is ", intrinsic.intrinsic_matrix)

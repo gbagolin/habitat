@@ -13,10 +13,7 @@ This code will extract the RGB,DEPTH, and Semantic segmentation from the scene s
 The name of the images are in the form of *x_y_z_rx_r_y_rz.[png, npy]*
 
 1. `cd Data_Extraction`
-
-2. Change the path to the data in line 43 of **img_extractor.py**
-2. `python img_extractor.py`
-
+2. `python img_extractor.py` <path to the test directory>
 
 ____
 ## Reconstruction from rgb-d and semantic segmentation
@@ -28,5 +25,4 @@ Requirement:
 
 Run
 1. `cd habitat_reconstruction`
-2. change path in line 247 of **scene_reconstrucion.py**
-3.`python scene_reconstruction.py`
+3.`python scene_reconstruction.py` <path to the 0.25m directory>

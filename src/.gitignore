@@ -2,3 +2,6 @@
 *.pyc
 *.npy
 *.png
+*.ply
+/data_extraction/0.25m/
+/data_extraction/test/

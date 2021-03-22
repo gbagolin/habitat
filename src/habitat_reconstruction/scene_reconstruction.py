@@ -176,13 +176,13 @@ def extract_wall(pcd, name):
         wall_pcd.points = o3d.utility.Vector3dVector(wall_zyx)
         wall_pcd.paint_uniform_color([1, 0, 0])
 
-        o3d.visualization.draw_geometries([wall_pcd])
+        # o3d.visualization.draw_geometries([wall_pcd])
 
         list_to_show = []
         pcd2 = copy.deepcopy(pcd)
         list_to_show.append(pcd2.paint_uniform_color([0, 1, 0]))
         list_to_show.append(wall_pcd)
-        o3d.visualization.draw_geometries(list_to_show)
+        # o3d.visualization.draw_geometries(list_to_show)
 
         return pcd
 
@@ -267,7 +267,7 @@ all_room_names.sort()
 print(all_room_names)
 
 selected_room_names = all_room_names
-intrinsic_file = "/content/habitat/src/habitat_reconstruction/camera_HABITAT.json"
+intrinsic_file = sys.argv[2]
 
 intrinsic = o3d.io.read_pinhole_camera_intrinsic(intrinsic_file)
 print("The intrinsic is ", intrinsic.intrinsic_matrix)
@@ -275,6 +275,7 @@ start_t = time.time()
 
 global floor_color
 global wall_color
+
 for name in selected_room_names:
     with open(data_path / name / "id_sem.json", "r") as ann_id:
         json_ann = json.load(ann_id)
